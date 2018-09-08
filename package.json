@@ -1,0 +1,8 @@
+{
+  "name": "xwing-rewrite",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:amilajack/xwing-rewrite.git",
+  "author": "Amila Welihinda <amilajack@gmail.com>",
+  "license": "MIT"
+}
