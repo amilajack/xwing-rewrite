@@ -4,5 +4,21 @@
   "main": "index.js",
   "repository": "git@github.com:amilajack/xwing-rewrite.git",
   "author": "Amila Welihinda <amilajack@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html --out-dir src"
+  },
+  "dependencies": {
+    "@tweenjs/tween.js": "^17.2.0",
+    "three": "^0.96.0",
+    "three-orbit-controls": "^82.1.0",
+    "threejs-window-resize": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.92.18",
+    "eslint": "^5.5.0",
+    "eslint-config-bliss": "^2.3.0",
+    "parcel": "^1.9.7",
+    "typescript": "^3.0.3"
+  }
 }
