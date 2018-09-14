@@ -6,7 +6,7 @@
   "author": "Amila Welihinda <amilajack@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "parcel index.html --out-dir src"
+    "start": "parcel index.html --out-dir src --open"
   },
   "dependencies": {
     "@tweenjs/tween.js": "^17.2.0",
@@ -19,6 +19,7 @@
     "eslint": "^5.5.0",
     "eslint-config-bliss": "^2.3.0",
     "parcel": "^1.9.7",
+    "stats.js": "^0.17.0",
     "typescript": "^3.0.3"
   }
 }

@@ -2,18 +2,20 @@ import * as THREE from 'three/build/three.module.js';
 import WindowResize from 'threejs-window-resize';
 import OrbitControlsFactory from 'three-orbit-controls';
 import './GLTFLoader';
-// import model from '';
 import sound from './sound';
 
 const OrbitControls = OrbitControlsFactory(THREE);
 
 // Scene
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 50000);
-// const camera = new THREE.Camera(50, window.innerWidth / window.innerHeight, 1, 100000);
+// const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 50000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 5;
+camera.position.x = -100;
+camera.position.x = -1000;
 
 // Renderer
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({ antialias: false });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -22,16 +24,16 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-// Gamma
+// // Gamma
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 
 // Lights
-const light = new THREE.SpotLight(0x999999, 0.7, 0);
-  light.position.set(-100, 1000, 1000);
-  light.target.position.set(0, 0, -1000);
-  light.castShadow = true;
-  scene.add(light);
+const light = new THREE.SpotLight(0x999999, 1, 0);
+light.position.set(-100, 1000, 1000);
+light.target.position.set(0, 0, -1000);
+light.castShadow = true;
+scene.add(light);
 
 // Orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -46,17 +48,16 @@ const loader = new THREE.GLTFLoader();
 // Load a glTF resource
 loader.load(
 	// resource URL
-	'./models/x-wing/scene.gltf',
+	'./models/x-wing-new/scene.gltf',
 	// called when the resource is loaded
 	(gltf) => {
-    console.log(gltf)
     scene.add( gltf.scene );
-    console.log('added to scene')
 		gltf.animations; // Array<THREE.AnimationClip>
 		gltf.scene; // THREE.Scene
 		gltf.scenes; // Array<THREE.Scene>
 		gltf.cameras; // Array<THREE.Camera>
     gltf.asset; // Object
+    camera.lookAt(gltf.scene);
 	},
 	// called while loading is progressing
 	(xhr) => {
@@ -71,9 +72,9 @@ loader.load(
 
 // Render loop
 function animate() {
-  requestAnimationFrame(animate);
+  controls.update();
   renderer.render(scene, camera);
-  controls.update()
+  requestAnimationFrame(animate);
 }
 
 WindowResize(renderer, camera);
