@@ -9,23 +9,22 @@ PubSub.subscribe('main.initialized', (msg, { scene }) => {
       Math.random() * 400 - 400,
       Math.random() * 20000 - 10000
     );
-    geometry.vertices.push(new THREE.Vertex(vector));
+    geometry.vertices.push(new THREE.Vector3(vector));
   }
-
-  const particleImage = THREE.ImageUtils.loadTexture('img/star.png');
-  const particleMaterial = new THREE.ParticleBasicMaterial({
+  const particleImage = new THREE.TextureLoader().load('img/star.png');
+  const particleMaterial = new THREE.PointsMaterial({
     size: 48,
     map: particleImage,
-    opacity: 1.0,
+    opacity: 1,
     transparent: false,
     depthTest: true,
     blending: THREE.NormalBlending
   });
 
-  const particles = new THREE.ParticleSystem(geometry, particleMaterial);
+  const particles = new THREE.Points(geometry, particleMaterial);
 
-  particles.position.z = -12000;
-  particles.position.y = 2000;
+  particles.position.z = 0;
+  particles.position.y = 0;
 
   scene.add(particles)
 })

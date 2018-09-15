@@ -7,6 +7,7 @@ import './models/x-wing'
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { isTouchDevice } from './helpers'
+import './stars'
 // import './sound';
 
 // These CANNOT be overriden
@@ -56,7 +57,7 @@ spotLight.position.set(100, 1000, 100);
 spotLight.target.position.set(0, 100, 0);
 spotLight.castShadow = true;
 scene.add(spotLight);
-const ambientLight = new THREE.AmbientLight(0x111111, 0.1);
+const ambientLight = new THREE.AmbientLight(0x111111, 0.6);
 scene.add(ambientLight);
 
 // Stats
