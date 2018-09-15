@@ -2,20 +2,22 @@ import * as THREE from 'three/build/three.module.js';
 import WindowResize from 'threejs-window-resize';
 import OrbitControlsFactory from 'three-orbit-controls';
 import GLTFLoader from 'three-gltf-loader';
+import Stats from 'stats.js'
 import sound from './sound';
-
-const OrbitControls = OrbitControlsFactory(THREE);
 
 // Scene
 const scene = new THREE.Scene();
-// const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 50000);
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+// Camera
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight
+);
 camera.position.z = 5;
 camera.position.x = -100;
-camera.position.x = -1000;
 
 // Renderer
-const renderer = new THREE.WebGLRenderer({ antialias: false });
+const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -24,60 +26,67 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-// // Gamma
+// Gamma
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 
 // Lights
-const light = new THREE.SpotLight(0x999999, 1, 0);
-light.position.set(-100, 1000, 1000);
-light.target.position.set(0, 0, -1000);
-light.castShadow = true;
-scene.add(light);
+const spotLight = new THREE.SpotLight(0x999999, 1, 0);
+spotLight.position.set(100, 1000, 100);
+spotLight.target.position.set(0, 100, 0);
+spotLight.castShadow = true;
+scene.add(spotLight);
 
-// Orbit controls
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.addEventListener('change', () => {
-  renderer.render(scene, camera);
-});
+// Stats
+const stats = new Stats();
+if (process.env.NODE_ENV === 'development') {
+  document.body.appendChild(stats.dom);
+}
+
+// Development Tools
+if (process.env.NODE_ENV === 'development') {
+  // Orbit controls
+  const OrbitControls = OrbitControlsFactory(THREE);
+  const controls = new OrbitControls(camera, renderer.domElement);
+  // Axes helper
+  const axesHelper = new THREE.AxesHelper(500);
+  scene.add(axesHelper);
+  // Spotlight helper
+  var spotLightHelper = new THREE.SpotLightHelper(spotLight);
+  scene.add(spotLightHelper);
+}
 
 // Models
-// Instantiate a loader
 const loader = new GLTFLoader();
-
-// Load a glTF resource
+// Load x-wing model
 loader.load(
-	// resource URL
-	'./models/x-wing-new/scene.gltf',
-	// called when the resource is loaded
-	(gltf) => {
-    scene.add( gltf.scene );
-		gltf.animations; // Array<THREE.AnimationClip>
-		gltf.scene; // THREE.Scene
-		gltf.scenes; // Array<THREE.Scene>
-		gltf.cameras; // Array<THREE.Camera>
-    gltf.asset; // Object
-    camera.lookAt(gltf.scene);
-    gltf.scene.scale.set(0.4, 0.4, 0.4);
-    gltf.scene.rotation.copy(new THREE.Euler(0, -3 * Math.PI / 4, 0));
-    gltf.scene.position.set(2, 1, 0);
-	},
-	// called while loading is progressing
-	(xhr) => {
-		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-	},
-	// called when loading has errors
-	( error ) => {
-    console.log(error)
-		console.log( 'An error happened' );
-	}
+  // resource URL
+  './models/x-wing-new/scene.gltf',
+  // called when the resource is loaded
+  gltf => {
+    gltf.scene.scale.set(0.8, 0.8, 0.8);
+    gltf.scene.rotation.copy(new THREE.Euler(0, (-3 * Math.PI) / 4, 0));
+    gltf.scene.position.set(0, 0, 0);
+    // camera.lookAt(gltf.scene)
+    scene.add(gltf.scene);
+  },
+  // called while loading is progressing
+  xhr => {
+    console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+  },
+  // called when loading has errors
+  error => {
+    console.log(error);
+  }
 );
 
 // Render loop
 function animate() {
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
-  // controls.update();
+  if (process.env.NODE_ENV === 'development') {
+    stats.update()
+  }
 }
 
 WindowResize(renderer, camera);

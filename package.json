@@ -20,6 +20,8 @@
     "eslint": "^5.5.0",
     "eslint-config-bliss": "^2.3.0",
     "parcel": "^1.9.7",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
     "stats.js": "^0.17.0",
     "typescript": "^3.0.3"
   }
