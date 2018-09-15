@@ -53,3 +53,4 @@ npm-debug.log.*
 .cache
 src/*.map
 src/*.js
+src/*.ogg
