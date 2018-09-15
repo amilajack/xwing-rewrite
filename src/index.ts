@@ -1,7 +1,7 @@
 import * as THREE from 'three/build/three.module.js';
 import WindowResize from 'threejs-window-resize';
 import OrbitControlsFactory from 'three-orbit-controls';
-import './GLTFLoader';
+import GLTFLoader from 'three-gltf-loader';
 import sound from './sound';
 
 const OrbitControls = OrbitControlsFactory(THREE);
@@ -43,7 +43,7 @@ controls.addEventListener('change', () => {
 
 // Models
 // Instantiate a loader
-const loader = new THREE.GLTFLoader();
+const loader = new GLTFLoader();
 
 // Load a glTF resource
 loader.load(
@@ -58,6 +58,9 @@ loader.load(
 		gltf.cameras; // Array<THREE.Camera>
     gltf.asset; // Object
     camera.lookAt(gltf.scene);
+    gltf.scene.scale.set(0.4, 0.4, 0.4);
+    gltf.scene.rotation.copy(new THREE.Euler(0, -3 * Math.PI / 4, 0));
+    gltf.scene.position.set(2, 1, 0);
 	},
 	// called while loading is progressing
 	(xhr) => {
@@ -72,9 +75,9 @@ loader.load(
 
 // Render loop
 function animate() {
-  controls.update();
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
+  // controls.update();
 }
 
 WindowResize(renderer, camera);
