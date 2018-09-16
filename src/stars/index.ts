@@ -1,4 +1,5 @@
 import * as THREE from 'three/build/three.module.js';
+import PubSub from 'pubsub-js'
 
 PubSub.subscribe('main.initialized', (msg, { scene }) => {
   const geometry = new THREE.Geometry();
@@ -22,7 +23,6 @@ PubSub.subscribe('main.initialized', (msg, { scene }) => {
   });
 
   const particles = new THREE.Points(geometry, particleMaterial);
-
   particles.position.z = 0;
   particles.position.y = 0;
 

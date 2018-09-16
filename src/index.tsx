@@ -3,20 +3,21 @@ import WindowResize from 'threejs-window-resize';
 import OrbitControlsFactory from 'three-orbit-controls';
 import PubSub from 'pubsub-js';
 import Stats from 'stats.js'
-import './models/x-wing'
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { isTouchDevice } from './helpers'
+import './models/x-wing-new'
+import { KeyboardControls, TouchControls } from './controls';
+import { isTouchDevice } from './helpers';
 import './stars'
 // import './sound';
 
 // These CANNOT be overriden
-const CONFIG = {
+export const CONFIG = {
   isTouchDevice: isTouchDevice()
-}
+};
 
 // These can be overriden
-const DEFAULTS = {
+export const DEFAULTS = {
   postprocessing: !CONFIG.isTouchDevice,
   antialias: !CONFIG.isTouchDevice,
   sizeRatio: CONFIG.isTouchDevice ? 3 : 1,
@@ -66,9 +67,11 @@ if (process.env.NODE_ENV === 'development') {
   document.body.appendChild(stats.dom);
 }
 
+// Models
 PubSub.subscribe('models.xwing.loaded', (msg, data: { gltf: { scene: Object } }) => {
   scene.add(data.gltf.scene);
 });
+PubSub.publish('main.load.models.xwing', {});
 
 // Development Tools
 if (process.env.NODE_ENV === 'development') {
@@ -79,44 +82,21 @@ if (process.env.NODE_ENV === 'development') {
   const axesHelper = new THREE.AxesHelper(500);
   scene.add(axesHelper);
   // Spotlight helper
-  var spotLightHelper = new THREE.SpotLightHelper(spotLight);
+  const spotLightHelper = new THREE.SpotLightHelper(spotLight);
   scene.add(spotLightHelper);
 }
 
-// postprocessing
-// let composer;
-// let effectFocus;
-// if (DEFAULTS.postprocessing) {
-//   const renderModel = new THREE.RenderPass(scene, camera);
-//   const effectBloom = new THREE.BloomPass(0.75);
-
-//   const effectVignette = new THREE.ShaderPass(THREE.ShaderExtras.vignette);
-//   effectVignette.uniforms.tDiffuse.texture = THREE.ImageUtils.loadTexture('img/Vignette_alpha.png');
-
-//   effectFocus = new THREE.ShaderPass(THREE.ShaderExtras.focus);
-
-//   effectFocus.uniforms.screenWidth.value = window.innerWidth / DEFAULTS.aspectRatio;
-//   effectFocus.uniforms.screenHeight.value = window.innerHeight / DEFAULTS.aspectRatio;
-//   effectFocus.uniforms.sampleDistance.value = 0;
-//   effectFocus.uniforms.waveFactor.value = 0;
-
-//   effectFocus.renderToScreen = true;
-
-//   composer = new THREE.EffectComposer(renderer);
-
-//   composer.addPass(renderModel);
-//   composer.addPass(effectBloom);
-//   composer.addPass(effectVignette);
-//   composer.addPass(effectFocus);
-// }
+// Controls
+CONFIG.isTouchDevice ? TouchControls() : KeyboardControls();
 
 // Render loop
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
-  if (DEFAULTS.postprocessing) {
-    // composer.render(delta);
-  }
+  // @TODO
+  // if (DEFAULTS.postprocessing) {
+  //   composer.render(delta);
+  // }
   if (process.env.NODE_ENV === 'development') { stats.update(); }
 }
 
