@@ -35,10 +35,8 @@ const scene = new THREE.Scene();
 // scene.fog = new THREE.Fog(0x000000, 20000, 25000);
 
 // Camera
-const camera = new THREE.PerspectiveCamera(
-  75,
-  DEFAULTS.aspectRatio
-);
+// @TODO: Change depth of field to improve perf on low end devices
+const camera = new THREE.PerspectiveCamera(75, DEFAULTS.aspectRatio, 0.1, 5000);
 
 camera.position.x = 0;
 camera.position.y = 0;
@@ -53,26 +51,26 @@ document.body.appendChild(renderer.domElement);
 renderer.setPixelRatio(window.devicePixelRatio);
 
 // Shadow
-// renderer.shadowMap.enabled = true;
-// renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-// renderer.shadowMapBias = 0.0039;
-// renderer.shadowMapDarkness = 0.5;
-// renderer.shadowMapWidth = 1024 / (DEFAULTS.aspectRatio * 2);
-// renderer.shadowMapHeight = 1024 / (DEFAULTS.aspectRatio * 2);
-// renderer.shadowMapEnabled = true;
-// renderer.shadowMapSoft = true;
-// renderer.shadowCameraNear = 1;
-// renderer.shadowCameraFar = 100000;
-// renderer.shadowCameraFov = 50;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMapBias = 0.0039;
+renderer.shadowMapDarkness = 0.5;
+renderer.shadowMapWidth = 1024 / (DEFAULTS.aspectRatio * 2);
+renderer.shadowMapHeight = 1024 / (DEFAULTS.aspectRatio * 2);
+renderer.shadowMapEnabled = true;
+renderer.shadowMapSoft = true;
+renderer.shadowCameraNear = 1;
+renderer.shadowCameraFar = 100000;
+renderer.shadowCameraFov = 50;
 
-// // Gamma
+// Gamma
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 
 // Lights
 const spotLight = new THREE.SpotLight(0xffffff);
 spotLight.position.set(100, 1000, 100);
-spotLight.target.position.set(0, 100, 0);
+spotLight.target.position.set(0, 0, 0);
 spotLight.castShadow = true;
 spotLight.shadow.camera.near = 50;
 spotLight.shadow.camera.far = 150;
@@ -89,9 +87,7 @@ if (process.env.NODE_ENV === 'development') {
 // Models
 PubSub.subscribe('models.xwing.loaded', (msg, data: { gltf: { scene: Object } }) => {
   DATA.xwing = data.gltf.scene;
-  scene.add(data.gltf.scene);
-  // camera.position.x = DATA.xwing.position.x - 500
-  // camera.position.y = DATA.xwing.position.y - 500
+  // scene.add(data.gltf.scene);
 });
 PubSub.publish('main.load.models.xwing', {});
 
