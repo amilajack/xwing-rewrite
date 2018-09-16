@@ -1,6 +1,3 @@
-import PubSub from 'pubsub-js';
-import Mousetrap from 'mousetrap';
-
 export function KeyboardControls(state) {
   // document.addEventListener('mousemove', onDocumentMouseMove);
   // document.addEventListener('mousedown', onDocumentMouseDown);
@@ -8,7 +5,6 @@ export function KeyboardControls(state) {
 
   document.addEventListener('keyup', (event) => {
     event.preventDefault();
-    event.stopPropagation();
     switch (event.key) {
       case 'ArrowLeft':
         state.leftIsDown = false;
@@ -25,12 +21,14 @@ export function KeyboardControls(state) {
       case 'Control':
         state.ctrlIsDown = false;
         break;
+      case 'Space':
+        state.spaceIsDown = false;
+        break;
     }
   });
 
   document.addEventListener('keydown', (event) => {
     event.preventDefault();
-    event.stopPropagation();
     switch (event.key) {
       case 'ArrowLeft':
         state.leftIsDown = true;
@@ -47,17 +45,10 @@ export function KeyboardControls(state) {
       case 'Control':
         state.ctrlIsDown = true;
         break;
+      case 'Space':
+        state.spaceIsDown = true;
+        break;
     }
-  });
-
-  Mousetrap.bind('ctrl', () => {
-    PubSub.publish(`xwing.lazer`);
-    return false;
-  });
-
-  Mousetrap.bind('space', () => {
-    PubSub.publish(`xwing.rotate`);
-    return false;
   });
 }
 

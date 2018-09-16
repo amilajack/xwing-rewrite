@@ -39,6 +39,7 @@ const STATE = {
   rightIsDown: false,
   downIsDown: false,
   ctrlIsDown: false,
+  spaceIsDown: false,
   inFullscreen: false
 }
 
@@ -99,7 +100,6 @@ if (process.env.NODE_ENV === 'development') {
 // Models
 PubSub.subscribe('models.xwing.loaded', (msg, data: { gltf: { scene: Object } }) => {
   DATA.xwing = data.gltf.scene;
-  // scene.add(data.gltf.scene);
   // const boxGeometry = new THREE.BoxGeometry(5, 5, 5);
   // const material = new THREE.MeshNormalMaterial({
   //   color: 'red'
@@ -180,15 +180,15 @@ function loop() {
   difY = Math.min(difY, 20);
   difY = Math.max(difY, -20);
 
-  DATA.xwing.rotation.x = difY / 40;
-  DATA.xwing.rotation.y = -(difX / 40) + Math.PI;
-  DATA.xwing.rotation.z = (difX / 40);
+  DATA.xwing.rotation.x = difY / 30;
+  DATA.xwing.rotation.y = -(difX / 30) + Math.PI;
+  DATA.xwing.rotation.z = (difX / 30);
   // xwing.rotation.z += sideWays.rotation;
 
   if (STATE.leftIsDown) { mouseXpercent -= 0.003 * CONFIG.delta; }
   if (STATE.rightIsDown) { mouseXpercent += 0.003 * CONFIG.delta; }
-  if (STATE.upIsDown) { mouseYpercent += 0.0025 * CONFIG.delta; }
-  if (STATE.downIsDown) { mouseYpercent -= 0.0025 * CONFIG.delta; }
+  if (STATE.upIsDown) { mouseYpercent += 0.003 * CONFIG.delta; }
+  if (STATE.downIsDown) { mouseYpercent -= 0.003 * CONFIG.delta; }
   if (mouseXpercent < -1) mouseXpercent = -1;
   if (mouseXpercent > 1) mouseXpercent = 1;
   if (mouseYpercent < -1) mouseYpercent = -1;
