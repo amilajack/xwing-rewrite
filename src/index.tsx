@@ -95,12 +95,11 @@ PubSub.subscribe('models.xwing.loaded', (msg, data: { gltf: { scene: Object } })
 });
 PubSub.publish('main.load.models.xwing', {});
 
-let orbitControls;
 // Development Tools
 if (process.env.NODE_ENV === 'development') {
   // Orbit controls
   const OrbitControls = OrbitControlsFactory(THREE);
-  orbitControls = new OrbitControls(camera, renderer.domElement);
+  DATA.orbitControls = new OrbitControls(camera, renderer.domElement);
   // Axes helper
   const axesHelper = new THREE.AxesHelper(500);
   scene.add(axesHelper);
@@ -123,8 +122,8 @@ PubSub.subscribe('stars.loaded', (msg, data) => {
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
-  if (process.env.NODE_ENV === 'development' && orbitControls) {
-    orbitControls.update();
+  if (process.env.NODE_ENV === 'development' && DATA.orbitControls) {
+    DATA.orbitControls.update();
   }
   // @TODO
   // if (DEFAULTS.postprocessing) {
