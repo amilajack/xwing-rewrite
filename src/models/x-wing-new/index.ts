@@ -13,8 +13,7 @@ PubSub.subscribe('main.load.models.xwing', () => {
     gltf => {
       // gltf.scene.castShadow = true;
       // gltf.scene.receiveShadow = false;
-      gltf.scene.scale.set(0.8, 0.8, 0.8);
-      gltf.scene.rotation.y = Math.PI;
+      gltf.scene.scale.set(0.1, 0.1, 0.1);
       gltf.scene.position.set(0, 0, 0);
       PubSub.publish('models.xwing.loaded', {
         gltf

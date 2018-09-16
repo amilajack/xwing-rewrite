@@ -5,6 +5,7 @@ import PubSub from 'pubsub-js';
 import Stats from 'stats.js'
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import loop from 'raf-loop';
 import './models/x-wing-new'
 import { KeyboardControls, TouchControls } from './controls';
 import { isTouchDevice } from './helpers';
@@ -21,13 +22,24 @@ export const DEFAULTS = {
   postprocessing: !CONFIG.isTouchDevice,
   antialias: !CONFIG.isTouchDevice,
   sizeRatio: CONFIG.isTouchDevice ? 3 : 1,
-  aspectRatio: window.innerWidth / window.innerHeight
+  aspectRatio: window.innerWidth / window.innerHeight,
+  CPUCores: navigator.hardwareConcurrency
 };
 
-const DATA = {
+export const DATA = {
   stars: undefined,
   xwing: undefined,
-  trench: undefined
+  trench: undefined,
+  orbitControls: undefined
+};
+
+const STATE = {
+  leftIsDown: false,
+  upIsDown: false,
+  rightIsDown: false,
+  downIsDown: false,
+  ctrlIsDown: false,
+  inFullscreen: false
 }
 
 // Scene
@@ -40,7 +52,7 @@ const camera = new THREE.PerspectiveCamera(75, DEFAULTS.aspectRatio, 0.1, 5000);
 
 camera.position.x = 0;
 camera.position.y = 0;
-camera.position.z = 500;
+camera.position.z = 100;
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -88,14 +100,20 @@ if (process.env.NODE_ENV === 'development') {
 PubSub.subscribe('models.xwing.loaded', (msg, data: { gltf: { scene: Object } }) => {
   DATA.xwing = data.gltf.scene;
   // scene.add(data.gltf.scene);
+  // const boxGeometry = new THREE.BoxGeometry(5, 5, 5);
+  // const material = new THREE.MeshNormalMaterial({
+  //   color: 'red'
+  // })
+  // DATA.xwing = new THREE.Mesh(boxGeometry, material);
+  scene.add(DATA.xwing);
 });
 PubSub.publish('main.load.models.xwing', {});
 
 // Development Tools
 if (process.env.NODE_ENV === 'development') {
   // Orbit controls
-  const OrbitControls = OrbitControlsFactory(THREE);
-  DATA.orbitControls = new OrbitControls(camera, renderer.domElement);
+  // const OrbitControls = OrbitControlsFactory(THREE);
+  // DATA.orbitControls = new OrbitControls(camera, renderer.domElement);
   // Axes helper
   const axesHelper = new THREE.AxesHelper(500);
   scene.add(axesHelper);
@@ -103,9 +121,6 @@ if (process.env.NODE_ENV === 'development') {
   const spotLightHelper = new THREE.SpotLightHelper(spotLight);
   scene.add(spotLightHelper);
 }
-
-// Controls
-CONFIG.isTouchDevice ? TouchControls() : KeyboardControls();
 
 // Stars
 PubSub.subscribe('stars.loaded', (msg, data) => {
@@ -118,15 +133,74 @@ PubSub.subscribe('stars.loaded', (msg, data) => {
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
+  loop();
+}
+
+let oldTime = 0;
+let mouseXpercent = 0;
+let mouseYpercent = 0;
+
+// Controls
+CONFIG.isTouchDevice ? TouchControls() : KeyboardControls(STATE);
+
+// Render loop
+function loop() {
+  let time = new Date().getTime();
+  CONFIG.delta = time - oldTime;
+  oldTime = time;
+
+  if (CONFIG.delta > 1000 || CONFIG.delta === 0) {
+    CONFIG.delta = 1000 / 60;
+  }
+
   if (process.env.NODE_ENV === 'development' && DATA.orbitControls) {
     DATA.orbitControls.update();
   }
+
+  if (!DATA.xwing) { return; }
+
+  const optimalDivider = CONFIG.delta / 16;
+  const smoothing = Math.max(8, 12 / optimalDivider);
+  let toX = mouseXpercent * 100;
+  let toY = mouseYpercent * 50;
+
+  // if (sideWays.state) {
+  //   toX = mouseXpercent * 480;
+  //   toY = -(mouseYpercent * 250);
+  // }
+
+  let difX = (toX - DATA.xwing.position.x) / smoothing;
+  let difY = (toY - DATA.xwing.position.y) / smoothing;
+
+  DATA.xwing.position.x += difX;
+  DATA.xwing.position.y += difY;
+
+  difX = Math.min(difX, 20);
+  difX = Math.max(difX, -20);
+  difY = Math.min(difY, 20);
+  difY = Math.max(difY, -20);
+
+  DATA.xwing.rotation.x = difY / 40;
+  DATA.xwing.rotation.y = -(difX / 40) + Math.PI;
+  DATA.xwing.rotation.z = (difX / 40);
+  // xwing.rotation.z += sideWays.rotation;
+
+  if (STATE.leftIsDown) { mouseXpercent -= 0.003 * CONFIG.delta; }
+  if (STATE.rightIsDown) { mouseXpercent += 0.003 * CONFIG.delta; }
+  if (STATE.upIsDown) { mouseYpercent += 0.0025 * CONFIG.delta; }
+  if (STATE.downIsDown) { mouseYpercent -= 0.0025 * CONFIG.delta; }
+  if (mouseXpercent < -1) mouseXpercent = -1;
+  if (mouseXpercent > 1) mouseXpercent = 1;
+  if (mouseYpercent < -1) mouseYpercent = -1;
+  if (mouseYpercent > 1) mouseYpercent = 1;
+
   // @TODO
   // if (DEFAULTS.postprocessing) {
   //   composer.render(delta);
   // }
   if (process.env.NODE_ENV === 'development') { stats.update(); }
 }
+
 
 // Render buttons to initiate user interaction for sound
 function Welcome() {

@@ -12,8 +12,6 @@ PubSub.subscribe('main.initialized', (msg, { scene }) => {
     starsGeometry.vertices.push(star);
   }
 
-  console.log('adfs')
-
   const starsMaterial = new THREE.PointsMaterial({ color: 0x888888 });
   const stars = new THREE.Points(starsGeometry, starsMaterial);
 
