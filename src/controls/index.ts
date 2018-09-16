@@ -4,7 +4,6 @@ export function KeyboardControls(state) {
   // document.addEventListener('mouseup', onDocumentMouseUp);
 
   document.addEventListener('keyup', (event) => {
-    event.preventDefault();
     switch (event.key) {
       case 'ArrowLeft':
         state.leftIsDown = false;
@@ -28,7 +27,6 @@ export function KeyboardControls(state) {
   });
 
   document.addEventListener('keydown', (event) => {
-    event.preventDefault();
     switch (event.key) {
       case 'ArrowLeft':
         state.leftIsDown = true;

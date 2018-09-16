@@ -64,17 +64,17 @@ document.body.appendChild(renderer.domElement);
 renderer.setPixelRatio(window.devicePixelRatio);
 
 // Shadow
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.shadowMapBias = 0.0039;
-renderer.shadowMapDarkness = 0.5;
-renderer.shadowMapWidth = 1024 / (DEFAULTS.aspectRatio * 2);
-renderer.shadowMapHeight = 1024 / (DEFAULTS.aspectRatio * 2);
-renderer.shadowMapEnabled = true;
-renderer.shadowMapSoft = true;
-renderer.shadowCameraNear = 1;
-renderer.shadowCameraFar = 100000;
-renderer.shadowCameraFov = 50;
+// renderer.shadowMap.enabled = true;
+// renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+// renderer.shadowMapBias = 0.0039;
+// renderer.shadowMapDarkness = 0.5;
+// renderer.shadowMapWidth = 1024 / (DEFAULTS.aspectRatio * 2);
+// renderer.shadowMapHeight = 1024 / (DEFAULTS.aspectRatio * 2);
+// renderer.shadowMapEnabled = true;
+// renderer.shadowMapSoft = true;
+// renderer.shadowCameraNear = 1;
+// renderer.shadowCameraFar = 100000;
+// renderer.shadowCameraFov = 50;
 
 // Gamma
 renderer.gammaInput = true;
@@ -194,6 +194,9 @@ function loop() {
   if (mouseYpercent < -1) mouseYpercent = -1;
   if (mouseYpercent > 1) mouseYpercent = 1;
 
+  camera.position.x = DATA.xwing.position.x;
+  camera.position.y = DATA.xwing.position.y;
+
   // @TODO
   // if (DEFAULTS.postprocessing) {
   //   composer.render(delta);
@@ -203,12 +206,12 @@ function loop() {
 
 
 // Render buttons to initiate user interaction for sound
-function Welcome() {
-  return (
-    <button onClick={() => PubSub.publish('welcome-button.clicked')}>Click to play</button>
-  );
-}
-ReactDOM.render(<Welcome />, document.getElementById('root'));
+// function WelcomePrompt() {
+//   return (
+//     <button onClick={() => PubSub.publish('welcome-screen.button.clicked')}>Click to play</button>
+//   );
+// }
+// ReactDOM.render(<WelcomePrompt />, document.getElementById('root'));
 
 WindowResize(renderer, camera);
 animate();
