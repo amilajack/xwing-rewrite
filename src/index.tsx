@@ -24,17 +24,25 @@ export const DEFAULTS = {
   aspectRatio: window.innerWidth / window.innerHeight
 };
 
+const DATA = {
+  stars: undefined,
+  xwing: undefined,
+  trench: undefined
+}
+
 // Scene
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0x000000, 20000, 25000);
+// scene.fog = new THREE.Fog(0x000000, 20000, 25000);
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
   75,
   DEFAULTS.aspectRatio
 );
-camera.position.z = 5;
-camera.position.x = -100;
+
+camera.position.x = 0;
+camera.position.y = 0;
+camera.position.z = 500;
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -45,10 +53,19 @@ document.body.appendChild(renderer.domElement);
 renderer.setPixelRatio(window.devicePixelRatio);
 
 // Shadow
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+// renderer.shadowMap.enabled = true;
+// renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+// renderer.shadowMapBias = 0.0039;
+// renderer.shadowMapDarkness = 0.5;
+// renderer.shadowMapWidth = 1024 / (DEFAULTS.aspectRatio * 2);
+// renderer.shadowMapHeight = 1024 / (DEFAULTS.aspectRatio * 2);
+// renderer.shadowMapEnabled = true;
+// renderer.shadowMapSoft = true;
+// renderer.shadowCameraNear = 1;
+// renderer.shadowCameraFar = 100000;
+// renderer.shadowCameraFov = 50;
 
-// Gamma
+// // Gamma
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 
@@ -57,6 +74,8 @@ const spotLight = new THREE.SpotLight(0xffffff);
 spotLight.position.set(100, 1000, 100);
 spotLight.target.position.set(0, 100, 0);
 spotLight.castShadow = true;
+spotLight.shadow.camera.near = 50;
+spotLight.shadow.camera.far = 150;
 scene.add(spotLight);
 const ambientLight = new THREE.AmbientLight(0x111111, 0.6);
 scene.add(ambientLight);
@@ -69,15 +88,19 @@ if (process.env.NODE_ENV === 'development') {
 
 // Models
 PubSub.subscribe('models.xwing.loaded', (msg, data: { gltf: { scene: Object } }) => {
+  DATA.xwing = data.gltf.scene;
   scene.add(data.gltf.scene);
+  // camera.position.x = DATA.xwing.position.x - 500
+  // camera.position.y = DATA.xwing.position.y - 500
 });
 PubSub.publish('main.load.models.xwing', {});
 
+let orbitControls;
 // Development Tools
 if (process.env.NODE_ENV === 'development') {
   // Orbit controls
   const OrbitControls = OrbitControlsFactory(THREE);
-  new OrbitControls(camera, renderer.domElement);
+  orbitControls = new OrbitControls(camera, renderer.domElement);
   // Axes helper
   const axesHelper = new THREE.AxesHelper(500);
   scene.add(axesHelper);
@@ -89,10 +112,20 @@ if (process.env.NODE_ENV === 'development') {
 // Controls
 CONFIG.isTouchDevice ? TouchControls() : KeyboardControls();
 
+// Stars
+PubSub.subscribe('stars.loaded', (msg, data) => {
+  DATA.stars = data.stars
+  DATA.stars.position.y = 500
+  scene.add(DATA.stars);
+});
+
 // Render loop
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
+  if (process.env.NODE_ENV === 'development' && orbitControls) {
+    orbitControls.update();
+  }
   // @TODO
   // if (DEFAULTS.postprocessing) {
   //   composer.render(delta);

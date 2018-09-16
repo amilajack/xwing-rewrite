@@ -12,3 +12,8 @@ Mousetrap.bind('ctrl', () => {
 Mousetrap.bind('space', () => {
   PubSub.publish(`xwing.rotate`);
 });
+
+// @TODO
+export function TouchControls() {}
+
+export function KeyboardControls() {}

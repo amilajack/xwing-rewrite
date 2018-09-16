@@ -1,30 +1,21 @@
 import * as THREE from 'three/build/three.module.js';
-import PubSub from 'pubsub-js'
+import PubSub from 'pubsub-js';
 
 PubSub.subscribe('main.initialized', (msg, { scene }) => {
-  const geometry = new THREE.Geometry();
+  const starsGeometry = new THREE.Geometry();
 
-  for (let i = 0; i < 1000; i++) {
-    const vector = new THREE.Vector3(
-      Math.random() * 10000 - 5000,
-      Math.random() * 400 - 400,
-      Math.random() * 20000 - 10000
-    );
-    geometry.vertices.push(new THREE.Vector3(vector));
+  for (let i = 0; i < 10000; i++) {
+    const star = new THREE.Vector3();
+    star.x = THREE.Math.randFloatSpread(Math.random() * 10000 - 5000);
+    star.y = THREE.Math.randFloatSpread(Math.random() * 1000);
+    star.z = THREE.Math.randFloatSpread(Math.random() * 20000 - 10000);
+    starsGeometry.vertices.push(star);
   }
-  const particleImage = new THREE.TextureLoader().load('img/star.png');
-  const particleMaterial = new THREE.PointsMaterial({
-    size: 48,
-    map: particleImage,
-    opacity: 1,
-    transparent: false,
-    depthTest: true,
-    blending: THREE.NormalBlending
+
+  const starsMaterial = new THREE.PointsMaterial({ color: 0x888888 });
+  const stars = new THREE.Points(starsGeometry, starsMaterial);
+
+  PubSub.publish('stars.loaded', {
+    stars
   });
-
-  const particles = new THREE.Points(geometry, particleMaterial);
-  particles.position.z = 0;
-  particles.position.y = 0;
-
-  scene.add(particles)
-})
+});
