@@ -156,15 +156,9 @@
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/@types/stats.js/-/stats.js-0.17.0.tgz#0ed81d48e03b590c24da85540c1d952077a9fe20"
 
-"@types/three@^0.92.18":
-  version "0.92.18"
-  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.92.18.tgz#49db164e47b00894bdf735f507af8993e5f777a9"
-  dependencies:
-    "@types/webvr-api" "*"
-
-"@types/webvr-api@*":
-  version "0.0.34"
-  resolved "https://registry.yarnpkg.com/@types/webvr-api/-/webvr-api-0.0.34.tgz#8fa49028de925c7b8bce3d559d3374ce2c89ee28"
+"@types/three@^0.92.24":
+  version "0.92.24"
+  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.92.24.tgz#ad5cba7950579daf5253ec819d706ff802fb1e8c"
 
 abbrev@1:
   version "1.1.1"
@@ -4814,9 +4808,9 @@ three-orbit-controls@^82.1.0:
   version "82.1.0"
   resolved "https://registry.yarnpkg.com/three-orbit-controls/-/three-orbit-controls-82.1.0.tgz#11a7f33d0a20ecec98f098b37780f6537374fab4"
 
-three@^0.96.0:
-  version "0.96.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.96.0.tgz#6f48bb9e321506906ae4708bda69b0ffa808ee7f"
+three@^0.97.0:
+  version "0.97.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.97.0.tgz#76141e1b0ace14246fe9198a458fefddc98a4e30"
 
 threejs-window-resize@^1.0.1:
   version "1.0.1"
