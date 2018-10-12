@@ -27,7 +27,7 @@
     "@types/three": "^0.92.24",
     "eslint": "^5.5.0",
     "eslint-config-bliss": "^2.3.0",
-    "parcel": "^1.10.2",
+    "parcel": "^1.10.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "stats.js": "^0.17.0",
