@@ -698,9 +698,9 @@
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/@types/stats.js/-/stats.js-0.17.0.tgz#0ed81d48e03b590c24da85540c1d952077a9fe20"
 
-"@types/three@^0.93.2":
-  version "0.93.2"
-  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.93.2.tgz#4681abcfe09272b68923aeffc1e4498339fb0dd1"
+"@types/three@^0.93.3":
+  version "0.93.3"
+  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.93.3.tgz#f0476c57e9f6b24927bf68f79cb836b0da277a5c"
 
 abbrev@1:
   version "1.1.1"
