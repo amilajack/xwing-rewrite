@@ -698,9 +698,9 @@
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/@types/stats.js/-/stats.js-0.17.0.tgz#0ed81d48e03b590c24da85540c1d952077a9fe20"
 
-"@types/three@^0.93.3":
-  version "0.93.3"
-  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.93.3.tgz#f0476c57e9f6b24927bf68f79cb836b0da277a5c"
+"@types/three@^0.93.5":
+  version "0.93.5"
+  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.93.5.tgz#460390081296522d99e54c6a8241b13f87fb6bc6"
 
 abbrev@1:
   version "1.1.1"
@@ -4995,9 +4995,9 @@ three-orbit-controls@^82.1.0:
   version "82.1.0"
   resolved "https://registry.yarnpkg.com/three-orbit-controls/-/three-orbit-controls-82.1.0.tgz#11a7f33d0a20ecec98f098b37780f6537374fab4"
 
-three@^0.97.0:
-  version "0.97.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.97.0.tgz#76141e1b0ace14246fe9198a458fefddc98a4e30"
+three@^0.98.0:
+  version "0.98.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.98.0.tgz#11d4e3cca4b5d099c7de0ea5afa153b5d20cda84"
 
 threejs-window-resize@^1.0.1:
   version "1.0.1"
