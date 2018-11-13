@@ -28,8 +28,8 @@
     "eslint": "^5.8.0",
     "eslint-config-bliss": "^3.0.0",
     "parcel": "^1.10.3",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "stats.js": "^0.17.0",
     "typescript": "^3.1.6"
   }
