@@ -4984,9 +4984,9 @@ three-fly-controls@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/three-fly-controls/-/three-fly-controls-1.1.0.tgz#8ea796da94ac017f5ea44ec015b1db5e19a42bd0"
 
-three-gltf-loader@^1.98.0:
-  version "1.98.0"
-  resolved "https://registry.yarnpkg.com/three-gltf-loader/-/three-gltf-loader-1.98.0.tgz#ed575a910ca5864bf44a64b84f8ec08d741e9399"
+three-gltf-loader@^1.99.0:
+  version "1.99.0"
+  resolved "https://registry.yarnpkg.com/three-gltf-loader/-/three-gltf-loader-1.99.0.tgz#c34a64cb41d91bc8e8184ec0de1b1d16597fd610"
 
 three-orbit-controls@^82.1.0:
   version "82.1.0"
