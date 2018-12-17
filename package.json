@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/pubsub-js": "^1.5.18",
     "@types/react": "^16.7.17",
-    "@types/react-dom": "^16.0.9",
+    "@types/react-dom": "^16.0.11",
     "@types/stats.js": "^0.17.0",
     "@types/three": "^0.93.8",
     "eslint": "^5.10.0",
