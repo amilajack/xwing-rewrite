@@ -15,7 +15,7 @@
     "three": "^0.100.0",
     "three-dragcontrols": "^0.88.2",
     "three-fly-controls": "^1.1.0",
-    "three-gltf-loader": "^1.99.1",
+    "three-gltf-loader": "^1.100.0",
     "three-orbit-controls": "^82.1.0",
     "threejs-window-resize": "^1.0.1"
   },
