@@ -1869,9 +1869,9 @@ eslint-config-airbnb-base@^13.1.0:
     object.assign "^4.1.0"
     object.entries "^1.0.4"
 
-eslint-config-bliss@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-bliss/-/eslint-config-bliss-3.1.2.tgz#9481e30389575b54c0ce15afc27e2c6472bb4bab"
+eslint-config-bliss@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-bliss/-/eslint-config-bliss-3.2.0.tgz#773902614a0d85db69f17ae1c5e54d5ebb4bed95"
   dependencies:
     babel-eslint "^10.0.1"
     eslint-config-airbnb-base "^13.1.0"
@@ -1880,7 +1880,7 @@ eslint-config-bliss@^3.1.2:
     eslint-plugin-flowtype-errors "^3.6.0"
     eslint-plugin-import "^2.14.0"
     eslint-plugin-jest "^22.1.2"
-    eslint-plugin-prettier "^3.0.0"
+    eslint-plugin-prettier "^3.0.1"
     eslint-plugin-promise "^4.0.1"
     flow-bin "^0.89.0"
     prettier "^1.15.3"
@@ -1940,9 +1940,9 @@ eslint-plugin-jest@^22.1.2:
   version "22.1.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-22.1.2.tgz#1ea36cc3faedbdb788e702ca633d635ca14e91e8"
 
-eslint-plugin-prettier@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.0.0.tgz#f6b823e065f8c36529918cdb766d7a0e975ec30c"
+eslint-plugin-prettier@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.0.1.tgz#19d521e3981f69dd6d14f64aec8c6a6ac6eb0b0d"
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
