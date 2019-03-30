@@ -6,7 +6,8 @@
   "author": "Amila Welihinda <amilajack@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "parcel build src/index.html --out-dir docs && cp -r src/models docs",
+    "build": "parcel build src/index.html --out-dir dist --public-url /xwing-rewrite && cp -r src/models dist",
+    "deploy": "rm -rf build && yarn build && gh-pages -d dist",
     "start": "parcel src/index.html --out-dir src --open"
   },
   "dependencies": {
@@ -28,6 +29,7 @@
     "@types/three": "^0.93.30",
     "eslint": "^5.16.0",
     "eslint-config-bliss": "^3.3.0",
+    "gh-pages": "^2.0.1",
     "parcel": "^1.12.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
