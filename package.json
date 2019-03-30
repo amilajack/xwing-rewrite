@@ -35,5 +35,10 @@
     "react-dom": "^16.8.6",
     "stats.js": "^0.17.0",
     "typescript": "^3.4.1"
+  },
+  "renovate": {
+    "extends": [
+      "bliss"
+    ]
   }
 }
