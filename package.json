@@ -33,7 +33,7 @@
     "@types/react-dom": "^16.8.3",
     "@types/stats.js": "^0.17.0",
     "@types/three": "^0.93.30",
-    "eslint-config-bliss": "^3.3.0",
+    "eslint-config-bliss": "^3.4.0",
     "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
